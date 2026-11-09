@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florida Theatre</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Times New Roman';
+        }
+
+        .infobar {
+            display: grid;
+            grid-template-columns: 1fr 20px;
+            background-color: #ffd701;
+
+            padding: 5px 0;
+        }
+
+        .infobar-notice {
+            text-align: center;
+            font-family: monospace;
+            font-size: 15px;
+
+            margin: 0;
+        }
+
+        .infobar-dismiss {
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 15px;
+
+            margin: 0;
+        }
+
+        .sect1 {
+            position: relative;
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+        
+        .sect1-bg {
+            display: block;
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            object-position: bottom;
+            filter: brightness(60%);
+        }
+
+        .sect1-header {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .sect1-header-title {
+            display: inline-block;
+            color: white;
+            font-size: 130px;
+            font-weight: 600;
+
+            margin: 0;
+        }
+
+        .sect1-header-img {
+            display: inline-block;
+
+            margin: 0 35px;
+        }
+
+        .ratings {
+            border-block: 4px solid #1d3d6e;
+            font-family: sans-serif;
+            overflow-x: hidden;
+            white-space: nowrap;
+
+            padding: 5px;
+        }
+
+        .ratings-marquee, 
+        .ratings-marquee-o {
+            display: inline-block;
+
+            animation-duration: 80s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .ratings-marquee{
+            animation-name: marquee;
+            animation-delay: -27s;
+        }
+
+        .ratings-marquee-o {
+            animation-name: marquee-o;
+            animation-delay: 13s;
+        }
+
+        .ratings-ele {
+            display: inline-block;
+            position: relative;
+
+            margin-right: 40px;
+        }
+
+        .ratings-ele-head {
+            display: grid;
+            grid-template-columns: 1fr auto auto 1fr;
+            width: 100%;
+
+            margin: 0;
+            margin-top: 4px;
+        }
+
+        .ratings-ele-head hr {
+            width: 100%;
+        }
+
+        .ratings-ele-head-name {
+            font-weight: 600;
+            color: #1d3d6e;
+
+            margin: 0 8px;
+        }
+
+        .ratings-ele-head-rate {
+            color: gold;
+            font-size: 20px;
+            line-height: 15px;
+
+            margin: 0;
+            margin-right: 8px;
+        }
+
+        .ratings-ele-body {
+            margin: 0;
+            margin-bottom: 4px;
+        }
+
+        .sect2 {
+            display: grid;
+            grid-template-columns: 32% 1fr;
+            column-gap: 20px;
+
+            padding: 20px;
+        }
+
+        .sect2-maps {
+            outline: 2px solid black;
+
+            width: 100%;
+        }
+
+        .sect2-info-title {
+            font-size: 60px;
+            font-weight: 600;
+            color: #1d3d6e;
+
+            margin: 0;
+            margin-top: -10px;
+        }
+        
+        .sect2-info-desc {
+            font-size: 20px;
+            color: #19212c;
+
+            margin: 0;
+        }
+
+        .sect2-info-visit {
+            border: 2px solid #1d3d6e;
+            border-radius: 5px;
+            background-color: #e0e6ee;
+            
+            padding: 5px;
+        }
+
+        .sect3 {
+            background-color: rgb(15, 31, 56);
+            display: grid;
+            grid-template-columns: 1fr 32%;
+            column-gap: 20px;
+
+            padding: 20px;
+        }
+        
+        .sect3-img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-position: right;
+            border: 2px solid rgb(83, 110, 153);
+        }
+
+        .sect3-info-title {
+            font-size: 60px;
+            font-weight: 600;
+            color: white;
+
+            margin: 0;
+            margin-top: -10px;
+        }
+
+        .sect3-info-desc {
+            font-size: 20px;
+            color: #b4b4b4;
+
+            margin: 0;
+        }
+
+        .sect3-info-pastheader {
+            font-size: 30px;
+            font-weight: 500;
+            color: white;
+
+            margin: 0;
+            margin-top: 20px;
+        }
+
+        .sect3-info-past {
+            margin: 0;
+        }
+
+        .sect3-info-past li {
+            font-size: 20px;
+            color: #b4b4b4;
+        }
+
+        .sect4 {
+            display: grid;
+            grid-template-columns: 32% 1fr;
+            column-gap: 20px;
+
+            padding: 20px;
+        }
+
+        .sect4-img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border: 2px solid black;
+        }
+
+        .sect4-info-title {
+            font-size: 60px;
+            font-weight: 600;
+            color: #1d3d6e;
+
+            margin: 0;
+            margin-top: -10px;
+        }
+        
+        .sect4-info-desc {
+            font-size: 20px;
+            color: #19212c;
+
+            margin: 0;
+        }
+
+        .sect5 {
+            background-color: rgb(15, 31, 56);
+            display: grid;
+            grid-template-columns: 1fr 40%;
+            column-gap: 20px;
+
+            padding: 20px;
+        }
+
+        .sect5-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sect5-img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-position: right;
+            border: 2px solid rgb(83, 110, 153);
+        }
+
+        .sect5-info-header {
+            font-size: 50px;
+            font-weight: 600;
+            color: white;
+
+            margin: 0;
+            margin-top: -10px;
+        }
+
+        .sect5-info-subheader {
+            font-size: 26px;
+            font-weight: 600;
+            color: rgb(170, 170, 170);
+
+            margin: 0;
+            margin-bottom: 15px;
+            margin-top: -4px;
+        }
+
+        .sect5-info-events {
+            --table-color: rgb(160, 160, 160);
+
+            font-size: 18px;
+            color: rgb(221, 221, 221);
+            border: 2px solid var(--table-color);
+        }
+
+        .sect5-info-events tr th,
+        .sect5-info-events tr td {
+            border: 1px solid var(--table-color);
+
+            padding: 4px 12px;
+        }
+
+        .sect6-title {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 600;
+            color: #1d3d6e;
+
+            margin: 0;
+            margin-top: 10px;
+        }
+
+        .sect6-desc {
+            text-align: center;
+            font-size: 20px;
+            color: #19212c;
+
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .sect6-gallery {
+            display: flex;
+            justify-content: center;
+            user-select: none;
+
+            margin-bottom: 10px;
+        }
+
+        .sect6-gallery-img-cont {
+            position: relative;
+            user-select: none;
+        }
+
+        .sect6-gallery-img {
+            border: 2px solid black;
+            object-fit: cover;
+            width: 87vw;
+            height: 80vh;
+            user-select: none;
+        }
+
+        .sect6-gallery-img-pause {
+            position: absolute;
+            bottom: 10px;
+            left: 5px;
+            border: 2px solid #1d3d6e;
+            cursor: pointer;
+            user-select: none;
+
+            padding: 1px 6px;
+        }
+
+        .sect6-gallery-arrow {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .sect6-gallery-back {
+            margin-right: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sect6-gallery-forth {
+            margin-left: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sect7 {
+            background-color: rgb(15, 31, 56);
+            column-gap: 20px;
+
+            padding: 25px;
+        }
+
+        .sect7-title {
+            font-size: 50px;
+            font-weight: 600;
+            color: white;
+
+            margin: 0;
+            margin-top: -10px;
+        }
+
+        .sect7-subtitle {
+            font-size: 25px;
+            color: rgb(170, 170, 170);
+
+            margin: 0;
+            margin-bottom: 15px;
+            margin-top: -4px;
+        }
+
+        .sect7-research-head {
+            font-size: 22px;
+            color: white;
+
+            margin: 0;
+        }
+
+        .sect7-research {
+            margin: 0;
+            margin-top: 5px;
+        }
+
+        .sect7-research li {
+            color: rgb(170, 170, 170);
+        }
+
+        .sect7-research li a {
+            color: rgb(255, 56, 56);
+        }
+
+        .sect7-duval {
+            width: 100%;
+            border: 2px solid white;
+
+            margin-top: 30px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes marquee-o {
+            0% { transform: translateX(0) }
+            100% { transform: translateX(-200%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="infobar">
+        <p class="infobar-notice">This webpage was not generated with AI.</p>
+        <p class="infobar-dismiss" onclick="this.parentElement.style.display = 'none';"><b>X</b></p>
+    </div>
+    <div class="sect1">
+        <img src="assets/fltMarquee.jpg" class="sect1-bg">
+        <div class="sect1-header">
+            <h1 class="sect1-header-title">Florida</h1>
+            <img src="assets/fltIcon.svg" class="sect1-header-img">
+            <h1 class="sect1-header-title">Theatre</h1>
+        </div>
+    </div> 
+    <div class="ratings">
+        <div class="ratings-marquee">
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Rachel S.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">Needless to say I will definitely be back for more shows there.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Gail C.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">What a spectacular night at the Florida Theatre!</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Joe M.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">Magnificent historical venue. Comfortable seats and good acoustics. Friendly staff and volunteers.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Rachel D.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">A gem to our city where many community acts and talents were performed at.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Douglas J.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">Every time I come to this place is always a breath of fresh air.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Ali B.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">The Florida theatre is new and improved! That's right, they have cup holders in the seats now.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Lauren K.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">It brings out the beauty that is Jacksonville.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Joshua Z.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">My friend's dad runs the place so it's automatically peak.</p>
+            </div>
+        </div>
+        
+
+        <div class="ratings-marquee-o">
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Rachel S.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">Needless to say I will definitely be back for more shows there.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Gail C.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">What a spectacular night at the Florida Theatre!</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Joe M.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">Magnificent historical venue. Comfortable seats and good acoustics. Friendly staff and volunteers.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Rachel D.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">A gem to our city where many community acts and talents were performed at.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Douglas J.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">Every time I come to this place is always a breath of fresh air.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Ali B.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">The Florida theatre is new and improved! That's right, they have cup holders in the seats now.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Lauren K.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">It brings out the beauty that is Jacksonville.</p>
+            </div>
+            <div class="ratings-ele">
+                <div class="ratings-ele-head"><hr><p class="ratings-ele-head-name">Joshua Z.</p><p class="ratings-ele-head-rate">&#9733;&#9733;&#9733;&#9733;&#9733;&#9733;</p><hr></div>
+                <p class="ratings-ele-body">My friend's dad runs the place so it's automatically peak.</p>
+            </div>
+        </div>
+    </div>
+    <div class="sect2">
+        <iframe class="sect2-maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6887.7296531702295!2d-81.65831112541795!3d30.32636250516014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e5b7190a747701%3A0x910336f98cdf53d9!2sFlorida%20Theatre%2C%20Inc.!5e0!3m2!1sen!2sus!4v1793565417566!5m2!1sen!2sus" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="sect2-info">
+            <h1 class="sect2-info-title">About</h1>
+            <p class="sect2-info-desc">
+                Established in 1927, the Florida Theater is a historical landmark in downtown 
+                Jacksonville, Fl that continues to operate as a performing arts center. The 1,865 
+                seat theatre is ran by a nonprofit organization in a partnership with the City 
+                of Jacksonville, who owns the building. It is known for its historical significance
+                and for being a broadcast host for many national radio and TV programs. 
+            </p>
+            <p class="sect2-info-visit">Visit their website: <a href="https://www.floridatheatre.com/" target="_blank">floridatheatre.com</a></p>
+        </div>
+    </div>
+    <div class="sect3">
+        <div class="sect3-info">
+            <h1 class="sect3-info-title">History</h1>
+            <p class="sect3-info-desc">
+                The Florida Theatre started its construction in the summer of 1926 on land 
+                previously occupied by a police station & jail. The structure was seven stories 
+                tall, and even featured a roof garden. After construction was complete, the theatre
+                opened to the public on April 8, 1927 as a place to show movies and live performances.
+                The theatre presented several programs on opening day, including an 18-piece ensemble
+                called <i>Frank Morris and the Brilliant Florida Orchestra</i>, as well as the film 
+                <i>Let It Rain</i>. The theatre continued to show a variety of content through the 
+                years, but it was on a financial decline during the 1970s and on May 8, 1980, it was 
+                forced to close. Its historical significance, though, led to a $500,000 dollar grant 
+                from the State of Florida and a $350,000 grant from the City of Jacksonville. It was 
+                later purchased and renovated by the Arts Assembly of Jacksonville for a collective 
+                cost of about $6 million. On August 26, 1983, one year after the purchase, the Florida 
+                Theatre was once again opened to the public. Today, the Florida Theater houses showings 
+                for the Florida Ballet, Theatreworks, and annual Community Nutcracker. 
+            </p>
+            <p class="sect3-info-pastheader">Notable Performers & Bands at the Florida Theatre</p>
+            <ul class="sect3-info-past">
+                <li>Elvis Presley</li>
+                <li>Bon Jovi</li>
+                <li>The Allman Brothers</li>
+                <li>Lynyrd Skynyrd</li>
+                <li>Fleetwood Mac</li>
+            </ul>
+        </div>
+        <img class="sect3-img" src="assets/fltOld.webp">
+    </div>
+    <div class="sect4">
+        <img class="sect4-img" src="assets/fltElvis.webp">
+        <div class="sect4-info">
+            <h1 class="sect4-info-title">Famous For</h1>
+            <p class="sect4-info-desc">
+                The Florida Theatre is not only well known for its historical value, it also 
+                is famous for specific moments involving its past performers. One particularly
+                well known controversy involves Elvis Presley, where his performances from the 
+                Florida Theatre caused concern among city leaders of Jacksonville. When Elvis 
+                returned the next year, a committee had formed, and Juvenile Court Judge Marion 
+                Gooding had prepared arrest warrents against him. Judge Gooding invited Elvis 
+                into his office, and threatened to execute the warrents if Elvis didn't tone
+                down his performance for the teenage audience. The show was performed, and no 
+                action was taken from the police or the judge. 
+            </p>
+            <br>
+            <p class="sect4-info-desc">
+                Additionally, the Florida Theatre is also knows as the place that Derek Trucks
+                first played with the Allman Brothers Band at eleven years old in 1991. That 
+                night, they played the song <i>One Way Out</i>.
+            </p>
+        </div>
+    </div>
+    <div class="sect5">
+        <div class="sect5-info">
+            <h1 class="sect5-info-header">Upcoming Events</h1>
+            <h2 class="sect5-info-subheader">November 2026</h2>
+            <table class="sect5-info-events">
+                <tr>
+                    <th>Event</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+                <tr>
+                    <td>Marcus Miller</td>
+                    <td>Nov 6, 2026</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Little Shop of Horrors 40th Anniversary Screening</td>
+                    <td>Nov 10, 2026</td>
+                    <td>7:30 PM</td>
+                </tr>
+                <tr>
+                    <td>Hotel California</td>
+                    <td>Nov 12, 2026</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Floyd Nation</td>
+                    <td>Nov 13, 2026</td>
+                    <td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Blank Space</td>
+                    <td>Nov 15, 2026</td>
+                    <td>6:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Frosty: A Musical Adventure</td>
+                    <td>Nov 18, 2026</td>
+                    <td>10:30 AM</td>
+                </tr>
+                <tr>
+                    <td>Rocky In Concert</td>
+                    <td>Nov 20, 2026</td>
+                    <td>7:30 PM</td>
+                </tr>
+            </table>
+        </div>
+        <img class="sect5-img" src="assets/fltShow.webp">
+    </div>
+    <div class="sect6">
+        <h1 class="sect6-title">Image Gallery</h1>
+        <p class="sect6-desc">See some interesting images from inside and outside the Florida Theatre!</p>
+        <div class="sect6-gallery">
+            <div class="sect6-gallery-arrow">
+                <svg class="sect6-gallery-back" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="40px" width="40px" fill="#1d3d6e"><path d="M7.83,13l5.6,5.6L12,20L4,12l8-8l1.43,1.4L7.83,11H20v2H7.83Z"/></svg>
+            </div>
+            <div class="sect6-gallery-img-cont">
+                <img class="sect6-gallery-img" src="assets/gallery/marqueeStraight.webp">
+                <button class="sect6-gallery-img-pause">Pause</button>
+            </div>
+            <div class="sect6-gallery-arrow">
+                <svg class="sect6-gallery-forth" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="40px" width="40px" fill="#1d3d6e"><path d="M16.18,13H4V11H16.18l-5.6-5.6L12,4l8,8l-8,8l-1.42-1.4l5.6-5.6Z"/></svg>
+            </div>
+        </div>
+    </div>
+    <div class="sect7">
+        <h1 class="sect7-title">Credits & References</h1>
+        <p class="sect7-subtitle">Website Created by Joshua Zurcher</p>
+        <br>
+        <p class="sect7-research-head">Used for Research:</p>
+        <ul class="sect7-research">
+            <li><b>Florida Theatre</b> [Information & Images] (floridatheatre.com) - <a href="https://www.floridatheatre.com/" target="_blank">Visit Website</a></li>
+            <li><b>Florida Theatre</b> [Information] (en.wikipedia.org) - <a href="https://en.wikipedia.org/wiki/Florida_Theatre" target="_blank">Visit Website</a></li>
+            <li><b>Florida Theatre Jacksonville</b> [Information] (theclio.com) - <a href="https://theclio.com/entry/117580" target="_blank">Visit Website</a></li>
+            <li><b>Florida Theatre</b> [Reviews] (yelp.com) - <a href="https://www.yelp.com/biz/florida-theatre-jacksonville-2" target="_blank">Visit Website</a></li>
+        </ul>
+        <img class="sect7-duval" src="assets/fltDuuuvalll.webp">
+    </div>
+    <marquee>The marquee tag above is a FAKE. Its made with css animations so it loops seamlessly. I'm never giving up my original marquee tags even though they are deprecated in HTML5. Also i like how I can easily do this: <marquee width="100"><button><marquee>marquee</marquee></button></marquee> Its a marquee button that says marquee in a marquee. No one can stop me. I am addicted to the marquee tag. <input placeholder="thing"> I just put that input there cuz I felt like it. Anyway enjoy recursive marquee: <marquee width="100"><marquee direction="up">Recursive Marquee</marquee></marquee>. That was a crazy recursive marquee. Ok bye. <button onclick="this.parentElement.remove();"><marquee>Delete this marquee FOREVER and never get it back</marquee></button></marquee>
+
+    <script>
+        const imgList = ["marqueeStraight.webp", "insideSet.webp", "oldMarquee.webp", "restoration.webp", "show.webp"];
+        let pointer = 0;
+        let interval;
+        let paused = false;
+
+        const gallery = {
+            forward () {
+                if (interval) {
+                    clearInterval(interval);
+                    interval = setInterval(gallery.forward, 5000);
+                }
+
+                if (pointer === imgList.length - 1) {
+                    pointer = 0;
+                } else {
+                    pointer++;
+                }
+
+                document.querySelector('.sect6-gallery-img').src = `assets/gallery/${imgList[pointer]}`;
+            },
+            backward () {
+                if (interval) {
+                    clearInterval(interval);
+                    interval = setInterval(gallery.forward, 5000);
+                }
+
+                if (pointer === 0) {
+                    pointer = imgList.length - 1;
+                } else {
+                    pointer--;
+                }
+
+                document.querySelector('.sect6-gallery-img').src = `assets/gallery/${imgList[pointer]}`;
+            }
+        };
+
+        document.querySelector('.sect6-gallery-back').addEventListener('click', gallery.backward);
+        document.querySelector('.sect6-gallery-forth').addEventListener('click', gallery.forward);
+
+        document.querySelector('.sect6-gallery-img-pause').addEventListener('click', () => {
+            if (paused) {
+                paused = false;
+                interval = setInterval(gallery.forward, 5000);
+
+                document.querySelector('.sect6-gallery-img-pause').innerText = "Pause";
+            } else {
+                paused = true;
+                clearInterval(interval);
+                interval = null;
+
+                document.querySelector('.sect6-gallery-img-pause').innerText = "Play";
+            }
+        });
+
+        interval = setInterval(gallery.forward, 5000);
+    </script>
+</body>
+</html>
