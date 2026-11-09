@@ -452,11 +452,44 @@
             0% { transform: translateX(0) }
             100% { transform: translateX(-200%); }
         }
+
+        .resize {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            background-color: rgb(236, 236, 236);
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .resize-head {
+            text-align: center;
+
+            margin: 4px;
+        }
+
+        .resize-body {
+            text-align: center;
+            
+            margin: 4px;
+        }
+
+        .resize-override {
+            cursor: pointer;
+
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="infobar">
-        <p class="infobar-notice">This webpage was not generated with AI.</p>
+        <p class="infobar-notice">
+            This site is not maintained; please do not expect updates or fixes. Additionally, this 
+            webpage was not generated with AI.
+        </p>
         <p class="infobar-dismiss" onclick="this.parentElement.style.display = 'none';"><b>X</b></p>
     </div>
     <div class="sect1">
@@ -686,6 +719,36 @@
     </div>
     <marquee>The marquee tag above is a FAKE. Its made with css animations so it loops seamlessly. I'm never giving up my original marquee tags even though they are deprecated in HTML5. Also i like how I can easily do this: <marquee width="100"><button><marquee>marquee</marquee></button></marquee> Its a marquee button that says marquee in a marquee. No one can stop me. I am addicted to the marquee tag. <input placeholder="thing"> I just put that input there cuz I felt like it. Anyway enjoy recursive marquee: <marquee width="100"><marquee direction="up">Recursive Marquee</marquee></marquee>. That was a crazy recursive marquee. Ok bye. <button onclick="this.parentElement.remove();"><marquee>Delete this marquee FOREVER and never get it back</marquee></button></marquee>
 
+    <div class="resize">
+        <h1 class="resize-head">Viewport Too Small</h1>
+        <p class="resize-body">
+            This site was not built for small devices or narrow viewports. For best viewing experience,
+            try using this website on a computer, or extend the viewport size. <br>
+            <button class="resize-override">View Anyway</button>
+        </p>
+    </div>
+
+    <script>
+        // Screen Sizing Notice
+        const resizeNotice = document.querySelector('.resize');
+
+        function handleResize() {
+            if (innerWidth < 1190) {
+                resizeNotice.style.display = "block";
+            } else {
+                resizeNotice.style.display = "none";
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        document.querySelector('.resize-override').addEventListener('click', () => {
+            window.removeEventListener('resize', handleResize);
+            resizeNotice.style.display = "none";
+        });
+
+        handleResize();
+    </script>
     <script>
         const imgList = ["marqueeStraight.webp", "insideSet.webp", "oldMarquee.webp", "restoration.webp", "show.webp"];
         let pointer = 0;
